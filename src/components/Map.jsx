@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Square from './Square';
 import Texture from './Texture';
 import { useDrop } from 'react-dnd';
+import { createRoot } from 'react-dom/client';
+import { Stage, Layer, Text } from 'react-konva';
 // const Map = ({ width, height }) => {
 //     const [squares, setSquares] = useState([
 //         { squareId: 1, xPos: 50, yPos: 50, color: "red" },
