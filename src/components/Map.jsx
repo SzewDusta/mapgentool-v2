@@ -66,8 +66,8 @@ const textureList = [
     {
         id: 1,
         url: "https://i.pinimg.com/564x/fa/75/4e/fa754e0c7bf1c3ed975a236e4f96dc10.jpg",
-        x: 0,
-        y: 0,
+        x: 128,
+        y: 128,
     },
     {
         id: 2,
@@ -78,8 +78,8 @@ const textureList = [
     {
         id: 3,
         url: "https://i.pinimg.com/236x/d2/ed/85/d2ed85d33101352aff3ba466dba3eba2.jpg",
-        x: 128,
-        y: 128,
+        x: 0,
+        y: 0,
     }
 ]
 function Map() {
@@ -88,7 +88,9 @@ function Map() {
     const [{ isOver }, drop] = useDrop({
         accept: 'texture',
         drop: (item) => {
-            const TextureList = textureList.filter((texture) => texture.id === item.id);
+            const TextureList = textureList.filter((texture) => texture.id === item.id)
+            TextureList.forEach
+            console.log(TextureList);
             setTextures((texture) => [...texture, TextureList[0]]);
         },
         collect: (monitor) => ({
@@ -107,7 +109,7 @@ function Map() {
                    return <Texture key={texture.id} id={texture.id} url={texture.url} x={texture.x} y={texture.y} />
                 })}
             </div>
-            <div className='map w-screen h-screen' ref={drop}>
+            <div className=' w-screen h-screen' ref={drop}>
                 {textures.map((texture) => {
                     return <Texture key={texture.id} id={texture.id} url={texture.url} x={texture.x} y={texture.y} />
                 }
