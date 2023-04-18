@@ -88,6 +88,7 @@ function App() {
           setAlt(e.target.alt);
           dragUrl.current = e.target.src;
         }}
+        
       />
       <img
         alt="ziemia"
