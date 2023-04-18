@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+body, html {
   margin: 0;
   box-sizing: border-box;
   padding: 0;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+  height: 100%;
+  width: 100%;
 }
-
