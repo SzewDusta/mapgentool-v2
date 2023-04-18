@@ -9,9 +9,10 @@ function Texture({id, url, x, y}) {
             isDragging: !!monitor.isDragging(),
         })
     }));
+    console.log("x: " + x + " y: " + y);
         
   return (
-    <img ref={drag} src={url} width="64px" height="64px" className={` top-[${x}px] left-[${y}px] border flex flex-wrap border-white ${isDragging ? "border-yellow-400 border-8" : ""}`}></img>
+    <img ref={drag} src={url} width="64px" height="64px" className={` top-${x}px left-${y}px border absolute border-white ${isDragging ? "border-yellow-400 border-8" : ""}`}></img>
   )
 }
 

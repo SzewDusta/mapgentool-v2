@@ -8,7 +8,7 @@ function Square({ xPos, yPos, color }) {
       
         return (
           <div
-            className={` left-[${xPos}px] top-[${yPos}px] h-16 w-16 border border-white bg-white`}
+            className={` left-${xPos}px top-${yPos}px absolute h-16 w-16 border border-white bg-white`}
             draggable
             onDragStart={handleDragStart}
             
