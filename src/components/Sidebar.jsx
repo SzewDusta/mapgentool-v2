@@ -1,14 +1,46 @@
 import React from 'react'
+import useImage from 'use-image';
+import ziemia from './ziemia.png';
+import woda from './woda.png';
+import podloga from './podloga.png';
+
 
 export default function Sidebar() {
+    
   return (
-    <div className=" text-left w-[15%] bg-black text-white h-screen flex">
-        <div className=' '>
-            <h1 className="text-2xl font-bold">Pozycja</h1>
-            <p >Nr. : <span>0</span></p>
-            <p>x: <span>0</span></p>
-            <p>y: <span>0</span></p>
-        </div>
+    <div>
+      {/* <button onClick={App.exportJson} >EKSPORT</button>
+      Wybierz blok:
+      <br />
+      <img
+        alt="podloga"
+        src={podloga}
+        draggable="true"
+        onDragStart={(e) => {
+          App.setAlt(e.target.alt);
+          App.dragUrl.current = e.target.src;
+        }}
+        
+      />
+      <img
+        alt="ziemia"
+        src={ziemia}
+        draggable="true"
+        onDragStart={(e) => {
+          App.setAlt(e.target.alt);
+          App.dragUrl.current = e.target.src;
+        }}
+      ></img>
+      <img
+        alt="woda"
+        name="chuj"
+        src={woda}
+        draggable="true"
+        onDragStart={(e) => {
+          App.setAlt(e.target.alt);
+          App.dragUrl.current = e.target.src;
+        }}
+      /> */}
     </div>
   )
 }
