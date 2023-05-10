@@ -1,3 +1,14 @@
+# Map Generator Tool
+![Animation](https://github.com/Maciek0475/Private-things/blob/main/MGTAnimation.gif)
+
+Map Generator Tool is simple is a simple application that allows you to create a map and export it to json to use in your project or game
+
+### Technology Stack
+
+Mostly used:
+* [React](https://react.dev/)
+* [Tailwindcss](https://tailwindcss.com)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +79,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Authors
+
+* **Filip Sęk** 
+* **Maciej Jurczak** 
+* **Błażej Skrobek** 
