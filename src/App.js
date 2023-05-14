@@ -125,6 +125,8 @@ function App() {
      
         <br />
         <button onClick={exportJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle" >EKSPORT</button>
+        <br />
+        <button onClick={exportJson} className=" mt-2 bg-red-500 text-white px-2 py-1 text-center rounded align-middle" >EKSPORT</button>
         </div>
     <div className='w-[88%] h-screen bg-slate-500'>
         
