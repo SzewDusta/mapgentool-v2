@@ -55,3 +55,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 * **Filip Sęk** 
 * **Maciej Jurczak** 
 * **Błażej Skrobek** 
+* **Hubert Konaszewski** 
