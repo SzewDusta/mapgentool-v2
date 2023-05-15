@@ -15,7 +15,6 @@ function App() {
   const [pos, setPos] = useState([]);
 
   const exportJson = ()=> {
-    // console.log(pos);
 
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(pos)
@@ -28,8 +27,32 @@ function App() {
 
   }
 
-  const URLImage = ({ image }) => {
+  const importJson = (e)=> {
     
+
+    const fileReader = new FileReader();
+    fileReader.readAsText(e.target.files[0], "UTF-8");
+    var cpy = [];
+    var cpy2 = [];
+    fileReader.onload = e => {
+      let d = JSON.parse(e.target.result);
+      
+      d.forEach(e => {
+        console.log(d);
+        let im = {ziemia: ziemia, woda: woda, podloga: podloga};
+        let sr = im[e.texture];
+        cpy.push({x: e.x, y: e.y, id: e.id, src: sr});
+        cpy2.push({id: e.id, texture: e.texture, x: e.x, y: e.y});
+        
+      });
+      setPos(cpy2);
+      setImages(cpy);
+      
+    };
+  }
+
+  const URLImage = ({ image }) => {
+    console.log(image);
     const [img] = useImage(image.src);
     
     return (
@@ -78,13 +101,15 @@ function App() {
 
   return (
     <div className='flex overflow-hidden'>
-    <div className=' w-[12%] bg-black text-white h-screen shadow-md'>
+    <div className=' w-[16%] bg-black text-white h-screen shadow-md'>
         
       Wybierz blok:
       <br />
       <div className=' p-2 space-y-3'>
         <img
             className=' cursor-grabbing'
+            x = {0}
+            y = {0}
             width="64px"
             height="64px"
             alt="podloga"
@@ -97,9 +122,11 @@ function App() {
             
         />
         <img
-        className=' cursor-grabbing'
-        width="64px"
-        height="64px"
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
             alt="ziemia"
             src={ziemia}
             draggable="true"
@@ -109,9 +136,11 @@ function App() {
             }}
         ></img>
         <img
-        className=' cursor-grabbing'
-        width="64px"
-        height="64px"
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
             alt="woda"
             name="chuj"
             src={woda}
@@ -126,7 +155,7 @@ function App() {
         <br />
         <button onClick={exportJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle" >EKSPORT</button>
         <br />
-        <button onClick={exportJson} className=" mt-2 bg-red-500 text-white px-2 py-1 text-center rounded align-middle" >EKSPORT</button>
+        <input type='file' onChange={importJson} className=" mt-2 bg-red-500 text-white ps-2 py-1 rounded w-60" />
         </div>
     <div className='w-[88%] h-screen bg-slate-500'>
         
@@ -138,6 +167,7 @@ function App() {
           stageRef.current.setPointersPositions(e);
           // add image
           var cpy = pos;
+          console.log(pos);
           setPos([...pos, {id:pos.length+1, x: stageRef.current.x, y: stageRef.current.y, texture: alt}]);
           setImages(
             images.concat([
@@ -148,6 +178,7 @@ function App() {
               },
             ])
           );
+          console.log(dragUrl.current);
         }}
         onDragOver={(e) => e.preventDefault()}
       >
@@ -159,6 +190,7 @@ function App() {
         >
           <Layer>
             {images.map((image) => {
+              console.log(images);
               return <URLImage image={image} />;
             })}
           </Layer>
