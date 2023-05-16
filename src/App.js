@@ -2,9 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Stage, Layer, Image } from 'react-konva';
 import useImage from 'use-image';
-import ziemia from './components/ziemia.png';
-import woda from './components/woda.png';
-import podloga from './components/podloga.png';
+import ziemia from './images/ziemia.png';
+import woda from './images/woda.png';
+import podloga from './images/podloga.png';
+import bdeska from './images/bdeska.png';
+import bpodloga from './images/bpodloga.png';
+import cdeska from './images/cdeska.png';
+import deska from './images/deska.png';
+import jdeska from './images/jdeska.png';
+import lawa from './images/lawa.png';
+import lod from './images/lod.png';
+import piach from './images/piach.png';
+import snieg from './images/snieg.png';
 
 
 function App() {
@@ -38,8 +47,7 @@ function App() {
       let d = JSON.parse(e.target.result);
       
       d.forEach(e => {
-        console.log(d);
-        let im = {ziemia: ziemia, woda: woda, podloga: podloga};
+        let im = {ziemia: ziemia, woda: woda, podloga: podloga, bdeska: bdeska, bpodloga: bpodloga, cdeska: cdeska, deska: deska, jdeska: jdeska, lawa: lawa, lod: lod, piach: piach, snieg: snieg};
         let sr = im[e.texture];
         cpy.push({x: e.x, y: e.y, id: e.id, src: sr});
         cpy2.push({id: e.id, texture: e.texture, x: e.x, y: e.y});
@@ -52,7 +60,6 @@ function App() {
   }
 
   const URLImage = ({ image }) => {
-    console.log(image);
     const [img] = useImage(image.src);
     
     return (
@@ -74,7 +81,6 @@ function App() {
           cpy[objIndex].x = image.x;
           cpy[objIndex].y = image.y;
           setPos(cpy);
-          console.log(cpy);
         
         }}
 
@@ -86,7 +92,6 @@ function App() {
           cpy[objIndex].x = image.x;
           cpy[objIndex].y = image.y;
           setPos(cpy);
-          console.log(cpy);
   
         }}
   
@@ -100,12 +105,18 @@ function App() {
   const [alt,setAlt] = useState("");
 
   return (
-    <div className='flex overflow-hidden'>
-    <div className=' w-[16%] bg-black text-white h-screen shadow-md'>
+    <div>
+<div className='lg:hidden text-center absolute top-[50%] w-full bg-slate-200   rounded px-3 py-2 z-20 text-black font-semiblod font'>
+        <h1 className='text-2xl'>Aby korzystać z edytora, proszę użyć urządzenia z większym ekranem.</h1>
+      </div>
+   
+    <div className='flex overflow-hidden blur-2xl lg:blur-0'>
+      
+    <div className=' w-[15%] bg-black text-white h-screen shadow-md'>
         
       Wybierz blok:
       <br />
-      <div className=' p-2 space-y-3'>
+      <div className=' space-y-1 grid grid-cols-2 ml-1'>
         <img
             className=' cursor-grabbing'
             x = {0}
@@ -119,7 +130,6 @@ function App() {
             setAlt(e.target.alt);
             dragUrl.current = e.target.src;
             }}
-            
         />
         <img
             className=' cursor-grabbing'
@@ -142,8 +152,133 @@ function App() {
             width="64px"
             height="64px"
             alt="woda"
-            name="chuj"
             src={woda}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="bdeska"
+            src={bdeska}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="bpodloga"
+            src={bpodloga}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="cdeska"
+            src={cdeska}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="deska"
+            src={deska}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="jdeska"
+            src={jdeska}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="lawa"
+            src={lawa}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="lod"
+            src={lod}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="piach"
+            src={piach}
+            draggable="true"
+            onDragStart={(e) => {
+            setAlt(e.target.alt);
+            dragUrl.current = e.target.src;
+            }}
+        />
+         <img
+            className=' cursor-grabbing'
+            x = {0}
+            y = {0}
+            width="64px"
+            height="64px"
+            alt="snieg"
+            src={snieg}
             draggable="true"
             onDragStart={(e) => {
             setAlt(e.target.alt);
@@ -153,9 +288,10 @@ function App() {
       </div>
      
         <br />
-        <button onClick={exportJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle" >EKSPORT</button>
+        <button onClick={exportJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle mb-2" >EKSPORT</button>
         <br />
-        <input type='file' onChange={importJson} className=" mt-2 bg-red-500 text-white ps-2 py-1 rounded w-60" />
+        <label htmlFor="import" className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle mt-2 cursor-pointer " >IMPORT</label>
+        <input type='file' name='import' accept='.json' id='import' onChange={importJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle mt-2 cursor-pointer hidden " />
         </div>
     <div className='w-[88%] h-screen bg-slate-500'>
         
@@ -167,7 +303,6 @@ function App() {
           stageRef.current.setPointersPositions(e);
           // add image
           var cpy = pos;
-          console.log(pos);
           setPos([...pos, {id:pos.length+1, x: stageRef.current.x, y: stageRef.current.y, texture: alt}]);
           setImages(
             images.concat([
@@ -178,7 +313,6 @@ function App() {
               },
             ])
           );
-          console.log(dragUrl.current);
         }}
         onDragOver={(e) => e.preventDefault()}
       >
@@ -190,7 +324,6 @@ function App() {
         >
           <Layer>
             {images.map((image) => {
-              console.log(images);
               return <URLImage image={image} />;
             })}
           </Layer>
@@ -199,6 +332,7 @@ function App() {
     </div>
     </div>
     
+    </div>
   );
 }
 
