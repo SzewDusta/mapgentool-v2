@@ -71,20 +71,17 @@ var tr = new Konva.Transformer();
       
       <Image
         className=' cursor-grabbing'
-        
         id={image.id}
         draggable
         image={img}
         x={image.x}
         y={image.y}
-        
         // shadowBlur={isDragging ? 10 : 0}
         // shadowOpacity={isDragging ? 0.6 :0}
         // shadowOffsetX={isDragging ? 10 : 0}
         // shadowOffsetY={isDragging ? 10 : 0}
         onPointerOver={(e)=>{
           if(snapping){
-            
             image.x = Math.round(e.target.x() / blockSize) * blockSize;
             image.y = Math.round(e.target.y() / blockSize) * blockSize;
             let cpy = pos;
@@ -397,10 +394,6 @@ if(snapping){
           stageRef.current.setPointersPositions(e);
           // add image
           var cpy = pos;
-          if(snapping){
-            stageRef.current.x = Math.round(stageRef.current.x/64)*64;
-            stageRef.current.y = Math.round(stageRef.current.y/64)*64;
-          }
           console.log(stageRef.current.x);
           setPos([...pos, {id:pos.length+1, x: stageRef.current.x, y: stageRef.current.y, texture: alt}]);
           console.log(pos);
@@ -423,6 +416,7 @@ if(snapping){
           ref={stageRef}
         >
           <Layer>
+            
             {images.map((image) => {
               return <URLImage image={image} />;
             })}
