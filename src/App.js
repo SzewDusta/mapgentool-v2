@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Stage, Layer, Image } from 'react-konva';
+import { Stage, Layer, Image, Line, Transformer } from 'react-konva';
 import useImage from 'use-image';
 import ziemia from './images/ziemia.png';
 import woda from './images/woda.png';
@@ -14,15 +14,20 @@ import lawa from './images/lawa.png';
 import lod from './images/lod.png';
 import piach from './images/piach.png';
 import snieg from './images/snieg.png';
+import Konva from 'konva';
 
 
 function App() {
+  var blockSize = 64;
+  var width = window.innerWidth;
+var height = window.innerHeight;
+var tr = new Konva.Transformer();
   const dragUrl = React.useRef();
   const stageRef = React.useRef();
+  const [isDragging , setIsDragging] = useState(false);
   const [images, setImages] = useState([]);
-
+  const [snapping, setSnapping] = useState(false);
   const [pos, setPos] = useState([]);
-
   const exportJson = ()=> {
 
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -66,41 +71,124 @@ function App() {
       
       <Image
         className=' cursor-grabbing'
+        
         id={image.id}
         draggable
         image={img}
         x={image.x}
         y={image.y}
-  
-
+        
+        // shadowBlur={isDragging ? 10 : 0}
+        // shadowOpacity={isDragging ? 0.6 :0}
+        // shadowOffsetX={isDragging ? 10 : 0}
+        // shadowOffsetY={isDragging ? 10 : 0}
         onPointerOver={(e)=>{
-          image.x = e.target.x();
-          image.y = e.target.y();
-          let cpy = pos;
-          let objIndex = cpy.findIndex((obj => obj.id === image.id));
-          cpy[objIndex].x = image.x;
-          cpy[objIndex].y = image.y;
-          setPos(cpy);
+          if(snapping){
+            
+            image.x = Math.round(e.target.x() / blockSize) * blockSize;
+            image.y = Math.round(e.target.y() / blockSize) * blockSize;
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+            console.log(pos);
+          }else {
+            image.x = e.target.x();
+            image.y = e.target.y();
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+          }
+          tr.forceUpdate();
         
         }}
-
-        onDragEnd={(e)=>{
-          image.x = e.target.x();
-          image.y = e.target.y();
-          let cpy = pos;
-          let objIndex = cpy.findIndex((obj => obj.id === image.id));
-          cpy[objIndex].x = image.x;
-          cpy[objIndex].y = image.y;
-          setPos(cpy);
-  
+        onDragMove={(e)=>{
+          if(snapping){
+            image.x = Math.round(e.target.x() / blockSize) * blockSize;
+            image.y = Math.round(e.target.y() / blockSize) * blockSize;
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+            tr.forceUpdate();
+          } else{
+            image.x = e.target.x();
+            image.y = e.target.y();
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+            tr.forceUpdate();
+          }
         }}
-  
-  
-        offsetX={img ? img.width / 2 : 0}
-        offsetY={img ? img.height / 2 : 0}
+        onDragStart={(e)=>{
+          setIsDragging(true);
+          e.target.stroke('red');
+            e.target.strokeWidth(5);
+            e.target.getLayer().batchDraw();
+            
+        }}
+        onDragEnd={(e)=>{
+          if(snapping){
+            image.x = Math.round(e.target.x() / blockSize) * blockSize;
+            image.y = Math.round(e.target.y() / blockSize) * blockSize;
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+            tr.forceUpdate();
+          } else{
+            image.x = e.target.x();
+            image.y = e.target.y();
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+            tr.forceUpdate();
+          }
+        }}
+         offsetX={img ? img.width / 2 : 0}
+         offsetY={img ? img.height / 2 : 0}
+         
       />
     );
   };
+// uklad wspolrzednych
+const grid = 64
+const gridWidth = window.innerWidth
+
+const linesA = []
+const linesB = []
+if(snapping){
+
+  for (let i = 0; i < gridWidth / grid; i++) {
+    linesA.push(
+      <Line
+        strokeWidth={2}
+        stroke={'black'}
+        // include offset to make line sharp
+
+        points={[i * grid, 0, i * grid, gridWidth]}
+      />
+    )
+
+    linesB.push(
+      <Line
+        strokeWidth={2}
+        stroke={'black'}
+        points={[0, i * grid, gridWidth, i * grid]}
+      />
+    )
+  }
+}
+
 
   const [alt,setAlt] = useState("");
 
@@ -270,6 +358,9 @@ function App() {
             setAlt(e.target.alt);
             dragUrl.current = e.target.src;
             }}
+            onDragEnd={(e) => {
+              console.log(e.target)
+            }}
         />
          <img
             className=' cursor-grabbing'
@@ -288,12 +379,15 @@ function App() {
       </div>
      
         <br />
+        <label htmlFor="snapping" className="cursor-pointer">Snapping</label>
+        <input type="checkbox" id="snapping" name="snapping"  onChange={() =>{setSnapping(!snapping); console.log(!snapping)}} className="cursor-pointer" />
+        <br></br>
         <button onClick={exportJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle mb-2" >EKSPORT</button>
         <br />
         <label htmlFor="import" className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle mt-2 cursor-pointer " >IMPORT</label>
         <input type='file' name='import' accept='.json' id='import' onChange={importJson} className=" bg-red-500 text-white px-2 py-1 text-center rounded align-middle mt-2 cursor-pointer hidden " />
         </div>
-    <div className='w-[88%] h-screen bg-slate-500'>
+    <div id='container' className='w-[88%] h-screen bg-slate-500'>
         
      
       <div
@@ -303,7 +397,13 @@ function App() {
           stageRef.current.setPointersPositions(e);
           // add image
           var cpy = pos;
+          if(snapping){
+            stageRef.current.x = Math.round(stageRef.current.x/64)*64;
+            stageRef.current.y = Math.round(stageRef.current.y/64)*64;
+          }
+          console.log(stageRef.current.x);
           setPos([...pos, {id:pos.length+1, x: stageRef.current.x, y: stageRef.current.y, texture: alt}]);
+          console.log(pos);
           setImages(
             images.concat([
               {
@@ -327,6 +427,10 @@ function App() {
               return <URLImage image={image} />;
             })}
           </Layer>
+          <Layer>
+          {linesA}
+          {linesB}
+        </Layer>
         </Stage>
       </div>
     </div>
