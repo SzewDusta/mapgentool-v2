@@ -28,6 +28,7 @@ var tr = new Konva.Transformer();
   const [images, setImages] = useState([]);
   const [snapping, setSnapping] = useState(false);
   const [pos, setPos] = useState([]);
+  const [xd, setXd] = useState(false);
   const exportJson = ()=> {
 
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -64,6 +65,14 @@ var tr = new Konva.Transformer();
     };
   }
 
+  const chuj = (kutas)=>{
+    if(snapping) {
+      return Math.round(Math.floor(kutas) / blockSize) * blockSize
+    } else {
+      return kutas;
+    }
+  }
+
   const URLImage = ({ image }) => {
     const [img] = useImage(image.src);
     
@@ -74,55 +83,70 @@ var tr = new Konva.Transformer();
         id={image.id}
         draggable
         image={img}
-        x={image.x}
-        y={image.y}
+        x={chuj(image.x)}
+        y={chuj(image.y)}
+        
         // shadowBlur={isDragging ? 10 : 0}
         // shadowOpacity={isDragging ? 0.6 :0}
         // shadowOffsetX={isDragging ? 10 : 0}
         // shadowOffsetY={isDragging ? 10 : 0}
-        onPointerOver={(e)=>{
-          if(snapping){
-            image.x = Math.round(e.target.x() / blockSize) * blockSize;
-            image.y = Math.round(e.target.y() / blockSize) * blockSize;
-            let cpy = pos;
-            let objIndex = cpy.findIndex((obj => obj.id === image.id));
-            cpy[objIndex].x = image.x;
-            cpy[objIndex].y = image.y;
-            setPos(cpy);
-            console.log(pos);
-          }else {
-            image.x = e.target.x();
-            image.y = e.target.y();
-            let cpy = pos;
-            let objIndex = cpy.findIndex((obj => obj.id === image.id));
-            cpy[objIndex].x = image.x;
-            cpy[objIndex].y = image.y;
-            setPos(cpy);
-          }
-          tr.forceUpdate();
+
+        // onPointerOver={(e)=>{
+        //   if(snapping){
+
+        //     image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
+        //     image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
+
+        //     // image.x = rnd(e.target.x());
+        //     // image.y = rnd(e.target.y());
+            
+        //     let cpy = pos;
+        //     let objIndex = cpy.findIndex((obj => obj.id === image.id));
+        //     cpy[objIndex].x = image.x;
+        //     cpy[objIndex].y = image.y;
+        //     setPos(cpy);
+        //     console.log(pos);
+        //   }else {
+        //     image.x = e.target.x();
+        //     image.y = e.target.y();
+        //     let cpy = pos;
+        //     let objIndex = cpy.findIndex((obj => obj.id === image.id));
+        //     cpy[objIndex].x = image.x;
+        //     cpy[objIndex].y = image.y;
+        //     setPos(cpy);
+        //   }
+        //   // tr.forceUpdate();
         
-        }}
-        onDragMove={(e)=>{
-          if(snapping){
-            image.x = Math.round(e.target.x() / blockSize) * blockSize;
-            image.y = Math.round(e.target.y() / blockSize) * blockSize;
-            let cpy = pos;
-            let objIndex = cpy.findIndex((obj => obj.id === image.id));
-            cpy[objIndex].x = image.x;
-            cpy[objIndex].y = image.y;
-            setPos(cpy);
-            tr.forceUpdate();
-          } else{
-            image.x = e.target.x();
-            image.y = e.target.y();
-            let cpy = pos;
-            let objIndex = cpy.findIndex((obj => obj.id === image.id));
-            cpy[objIndex].x = image.x;
-            cpy[objIndex].y = image.y;
-            setPos(cpy);
-            tr.forceUpdate();
-          }
-        }}
+        // }}
+
+        // onDragMove={(e)=>{
+          //  // image.x = e.target.x();
+          //  // image.y = e.target.y();
+        //   // console.log("end");
+        //   // if(snapping){
+
+        //   //   image.x = e.target.x();
+        //   //   image.y = e.target.y();
+
+        //   //   console.log(Math.round(e.target.x() / blockSize) * blockSize);
+        //   //   let cpy = pos;
+        //   //   let objIndex = cpy.findIndex((obj => obj.id === image.id));
+        //   //   cpy[objIndex].x = image.x;
+        //   //   cpy[objIndex].y = image.y;
+        //   //   setPos(cpy);
+        //   //   // tr.forceUpdate();
+        //   // } else{
+        //   //   image.x = e.target.x();
+        //   //   image.y = e.target.y();
+        //   //   let cpy = pos;
+        //   //   let objIndex = cpy.findIndex((obj => obj.id === image.id));
+        //   //   cpy[objIndex].x = image.x;
+        //   //   cpy[objIndex].y = image.y;
+        //   //   setPos(cpy);
+        //   //   // tr.forceUpdate();
+        //   // }
+        // }}
+
         onDragStart={(e)=>{
           setIsDragging(true);
           e.target.stroke('red');
@@ -130,16 +154,49 @@ var tr = new Konva.Transformer();
             e.target.getLayer().batchDraw();
             
         }}
+
+        // onMouseUp={(e)=>{
+        //   console.log("end");
+        //   if(snapping){
+
+        //     image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
+        //     image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
+
+        //     console.log(Math.round(e.target.x() / blockSize) * blockSize);
+        //     let cpy = pos;
+        //     let objIndex = cpy.findIndex((obj => obj.id === image.id));
+        //     cpy[objIndex].x = image.x;
+        //     cpy[objIndex].y = image.y;
+        //     setPos(cpy);
+        //     // tr.forceUpdate();
+        //   } else{
+        //     image.x = e.target.x();
+        //     image.y = e.target.y();
+        //     let cpy = pos;
+        //     let objIndex = cpy.findIndex((obj => obj.id === image.id));
+        //     cpy[objIndex].x = image.x;
+        //     cpy[objIndex].y = image.y;
+        //     setPos(cpy);
+        //     // tr.forceUpdate();
+        //   }
+        // }}
+
+
         onDragEnd={(e)=>{
+          
+          console.log("end");
           if(snapping){
-            image.x = Math.round(e.target.x() / blockSize) * blockSize;
-            image.y = Math.round(e.target.y() / blockSize) * blockSize;
+
+            image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
+            image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
+
+            console.log(Math.round(e.target.x() / blockSize) * blockSize);
             let cpy = pos;
             let objIndex = cpy.findIndex((obj => obj.id === image.id));
             cpy[objIndex].x = image.x;
             cpy[objIndex].y = image.y;
             setPos(cpy);
-            tr.forceUpdate();
+            // tr.forceUpdate();
           } else{
             image.x = e.target.x();
             image.y = e.target.y();
@@ -148,9 +205,14 @@ var tr = new Konva.Transformer();
             cpy[objIndex].x = image.x;
             cpy[objIndex].y = image.y;
             setPos(cpy);
-            tr.forceUpdate();
+            // tr.forceUpdate();
           }
+          // setIsDragging(false);
+          setXd(!xd);
         }}
+
+        
+
          offsetX={img ? img.width / 2 : 0}
          offsetY={img ? img.height / 2 : 0}
          
@@ -185,6 +247,11 @@ if(snapping){
     )
   }
 }
+
+useEffect(()=>{
+    tr.forceUpdate();  
+  
+}, [xd])
 
 
   const [alt,setAlt] = useState("");
@@ -394,13 +461,16 @@ if(snapping){
           stageRef.current.setPointersPositions(e);
           // add image
           var cpy = pos;
-          console.log(stageRef.current.x);
+          console.log(stageRef.current.getPointerPosition());
           setPos([...pos, {id:pos.length+1, x: stageRef.current.x, y: stageRef.current.y, texture: alt}]);
+          var a = stageRef.current.getPointerPosition();
           console.log(pos);
           setImages(
             images.concat([
               {
-                ...stageRef.current.getPointerPosition(),
+                // ...stageRef.current.getPointerPosition(),
+                x: a.x,
+                y: a.y,
                 id: cpy.length+1,
                 src: dragUrl.current,
               },
