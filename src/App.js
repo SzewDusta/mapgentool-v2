@@ -187,8 +187,11 @@ var tr = new Konva.Transformer();
           console.log("end");
           if(snapping){
 
-            image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
-            image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
+            // image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
+            // image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
+
+            image.x = chuj(e.target.x());
+            image.y = chuj(e.target.y());
 
             console.log(Math.round(e.target.x() / blockSize) * blockSize);
             let cpy = pos;
