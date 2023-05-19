@@ -34,6 +34,7 @@ var tr = new Konva.Transformer();
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(pos)
     )}`;
+    console.log(pos);
     const link = document.createElement("a");
     link.href = jsonString;
     link.download = "data.json";
@@ -67,6 +68,7 @@ var tr = new Konva.Transformer();
 
   const rounding = (value)=>{
     if(snapping) {
+      console.log(value)
       return Math.round(Math.floor(value) / blockSize) * blockSize
     } else {
       return value;
@@ -91,37 +93,37 @@ var tr = new Konva.Transformer();
         // shadowOffsetX={isDragging ? 10 : 0}
         // shadowOffsetY={isDragging ? 10 : 0}
 
-        // onPointerOver={(e)=>{
-        //   if(snapping){
+        onPointerOver={(e)=>{
+          if(snapping){
 
-        //     image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
-        //     image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
+            image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
+            image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
 
-        //     // image.x = rnd(e.target.x());
-        //     // image.y = rnd(e.target.y());
+            // image.x = rnd(e.target.x());
+            // image.y = rnd(e.target.y());
             
-        //     let cpy = pos;
-        //     let objIndex = cpy.findIndex((obj => obj.id === image.id));
-        //     cpy[objIndex].x = image.x;
-        //     cpy[objIndex].y = image.y;
-        //     setPos(cpy);
-        //     console.log(pos);
-        //   }else {
-        //     image.x = e.target.x();
-        //     image.y = e.target.y();
-        //     let cpy = pos;
-        //     let objIndex = cpy.findIndex((obj => obj.id === image.id));
-        //     cpy[objIndex].x = image.x;
-        //     cpy[objIndex].y = image.y;
-        //     setPos(cpy);
-        //   }
-        //   // tr.forceUpdate();
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+            console.log(pos);
+          }else {
+            image.x = e.target.x();
+            image.y = e.target.y();
+            let cpy = pos;
+            let objIndex = cpy.findIndex((obj => obj.id === image.id));
+            cpy[objIndex].x = image.x;
+            cpy[objIndex].y = image.y;
+            setPos(cpy);
+          }
+          // tr.forceUpdate();
         
-        // }}
+        }}
 
         // onDragMove={(e)=>{
-          //  // image.x = e.target.x();
-          //  // image.y = e.target.y();
+        //    // image.x = e.target.x();
+        //    // image.y = e.target.y();
         //   // console.log("end");
         //   // if(snapping){
 
@@ -186,12 +188,12 @@ var tr = new Konva.Transformer();
           
           console.log("end");
           if(snapping){
+            
+            image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
+            image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
 
-            // image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
-            // image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
-
-            image.x = rounding(e.target.x());
-            image.y = rounding(e.target.y());
+            // image.x = rounding(e.target.x());
+            // image.y = rounding(e.target.y());
 
             console.log(Math.round(e.target.x() / blockSize) * blockSize);
             let cpy = pos;
@@ -199,6 +201,7 @@ var tr = new Konva.Transformer();
             cpy[objIndex].x = image.x;
             cpy[objIndex].y = image.y;
             setPos(cpy);
+            
             // tr.forceUpdate();
           } else{
             image.x = e.target.x();
@@ -208,6 +211,7 @@ var tr = new Konva.Transformer();
             cpy[objIndex].x = image.x;
             cpy[objIndex].y = image.y;
             setPos(cpy);
+            console.log(image.x)
             // tr.forceUpdate();
           }
           // setIsDragging(false);
@@ -465,9 +469,11 @@ useEffect(()=>{
           // add image
           var cpy = pos;
           console.log(stageRef.current.getPointerPosition());
+          console.log();
           setPos([...pos, {id:pos.length+1, x: stageRef.current.x, y: stageRef.current.y, texture: alt}]);
-          var a = stageRef.current.getPointerPosition();
           console.log(pos);
+          var a = stageRef.current.getPointerPosition();
+          console.log(a.x);
           setImages(
             images.concat([
               {
