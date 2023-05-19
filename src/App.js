@@ -65,11 +65,11 @@ var tr = new Konva.Transformer();
     };
   }
 
-  const chuj = (kutas)=>{
+  const rounding = (value)=>{
     if(snapping) {
-      return Math.round(Math.floor(kutas) / blockSize) * blockSize
+      return Math.round(Math.floor(value) / blockSize) * blockSize
     } else {
-      return kutas;
+      return value;
     }
   }
 
@@ -83,8 +83,8 @@ var tr = new Konva.Transformer();
         id={image.id}
         draggable
         image={img}
-        x={chuj(image.x)}
-        y={chuj(image.y)}
+        x={rounding(image.x)}
+        y={rounding(image.y)}
         
         // shadowBlur={isDragging ? 10 : 0}
         // shadowOpacity={isDragging ? 0.6 :0}
@@ -190,8 +190,8 @@ var tr = new Konva.Transformer();
             // image.x = Math.round(Math.floor(e.target.x()) / blockSize) * blockSize;
             // image.y = Math.round(Math.floor(e.target.y()) / blockSize) * blockSize;
 
-            image.x = chuj(e.target.x());
-            image.y = chuj(e.target.y());
+            image.x = rounding(e.target.x());
+            image.y = rounding(e.target.y());
 
             console.log(Math.round(e.target.x() / blockSize) * blockSize);
             let cpy = pos;
